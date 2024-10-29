@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: white; 
+        }
+        .caixa {
+            border: 1px solid #000;
+            border-radius: 10px; 
+            padding: 60px; 
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 80%; 
+            max-width: 1000px; 
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 40px; 
+            font-size: 32px;
+        }
+        .form-container {
+            margin-bottom: 30px;
+            display: flex; 
+            justify-content: center; 
+        }
+        input {
+            padding: 20px;
+            font-size: 20px; 
+            border: 1px solid #000;
+            border-radius: 5px; 
+            margin-right: 10px;
+            width: 75%; 
+            max-width: 500px; 
+        }
+        button {
+            padding: 20px 30px;
+            font-size: 20px; 
+            color: white; 
+            background-color: #000; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #444; 
+        }
+        table {
+            border-collapse: separate; 
+            margin-top: 30px; 
+            width: 100%;
+        }
+        th, td {
+            background-color: white;
+            border: 1px solid #ccc; 
+            padding: 15px; 
+            text-align: left;
+            border-radius: 5px;
+        }
+        th {
+            background-color: #000; 
+            color: white; 
+        }
+        .lixeira {
+            cursor: pointer;
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="caixa">
+        <h1>Lista de Tarefas</h1>
+        <div class="form-container">
+            <input type="text" id="listaInput" placeholder="Digite aqui a tarefa">
+            <button id="addBotaoLista">Adicionar Tarefa</button>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th colspan="2">Descrição</th>
+                </tr>
+            </thead>
+            <tbody id="tarefas"></tbody>
+        </table>
+    </div>
+
+    <script>
+        const addBotaoLista = document.getElementById('addBotaoLista');
+        const listaInput = document.getElementById('listaInput');
+        const tarefas = document.getElementById('tarefas');
+        let contador = 1;
+
+        addBotaoLista.addEventListener('click', () => {
+            const tarefaTexto = listaInput.value;
+            if (tarefaTexto) {
+                const novaLinha = document.createElement('tr');
+                novaLinha.innerHTML = `
+                    <td>${contador}</td>
+                    <td>${tarefaTexto}</td>
+                    <td class="lixeira" onclick="removerTarefa(this)">🗑️</td>
+                `;
+                tarefas.appendChild(novaLinha);
+                listaInput.value = '';
+                contador++;
+            }
+        });
+
+        function removerTarefa(elemento) {
+            elemento.parentElement.remove();
+        }
+    </script>
+</body>
+</html>
